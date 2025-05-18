@@ -36,5 +36,24 @@ namespace AlkatreszekProjekt.Controllers
         }
 
 
+
+
+        [HttpGet("alkatreszek/laptop/count")]
+        public async Task<int> GetNumberOfLaptopAlkatresz()
+        {
+            return await _context.Alkatreszeks.Where(a => a.LaptopAlkatresz == "True").CountAsync();
+        }
+
+        [HttpGet("megrendelok/budapest/count")]
+        public async Task<int> GetNumberOfMegrendeloFromBudapest()
+        {
+            return await _context.Megrendeloks.Where(m => m.Lakhely == "Budapest").CountAsync();
+        }
+
+        [HttpGet("beszallitok/debrecen/count")]
+        public async Task<int> GetNumberOfBeszallitoFromDebrecen()
+        {
+            return await _context.Beszallitoks.Where(b => b.BeszallitoTelephely == "Debrecen").DistinctBy(b=>b.Id).CountAsync();
+        }
     }
 }
