@@ -62,7 +62,46 @@ namespace AlkatreszekProjekt.Controllers
         [HttpGet("beszallitok/nevsorrend")]
         public async Task<IActionResult> GetBeszallitokOrderedByName()
         {
-            return Ok(await _context.Beszallitoks.OrderBy(b=>b.BeszallitoNev));
+            return Ok(await _context.Beszallitoks.OrderBy(b=>b.BeszallitoNev).ToListAsync());
+        }
+
+        [HttpGet("megrendelok/ferfi")]
+        public async Task<IActionResult> GetMaleMegrendelok()
+        {
+            return Ok(await _context.Megrendeloks.Where(m=>m.Ferfi == "True").ToListAsync());
+        }
+
+        [HttpGet("megrendelesek/datum/csokkeno")]
+        public async Task<IActionResult> GetMegrendelesekOrderedByDateDesc()
+        {
+            return Ok(await _context.Megrendeleseks.OrderByDescending(m=>m.Datum).ToListAsync());
+        }
+
+        [HttpGet("megrendelesek/megrendelo/lakhely")]
+        public async Task<IActionResult> GetMegrendelesekOrderedByLakhely()
+        {
+            return Ok(await _context.Megrendeleseks
+                                                    .Join(_context.Megrendeloks, rendeles => rendeles.MegrendeloId, rendelo => rendelo.Id, (rendeles,rendelo) => new {rendeles= rendeles, lakhely = rendelo.Lakhely })
+                                                    .OrderBy(m=>m.lakhely)
+                                                    .ToListAsync());
+        }
+
+        [HttpGet("beszallitok/distinct")]
+        public async Task<IActionResult> GetBeszallitokDistinct()
+        {
+            return Ok(await _context.Beszallitoks.DistinctBy(m => m.Id).ToListAsync());
+        }
+
+        [HttpGet("alkatreszek/mennyisegcsokkeno")]
+        public async Task<IActionResult> GetAlkatreszekCsokkeno()
+        {
+            return Ok(await _context.Alkatreszeks.OrderByDescending(a=>a.Raktaron).ToListAsync());
+        }
+
+        [HttpGet("megrendelesek/feb10utan")]
+        public async Task<IActionResult> GetMegrendelesekFeb10Utan()
+        {
+            return Ok(await _context.Megrendeleseks.Where(m => string.Compare(m.Datum, "2025-02-10") > 0).ToListAsync());
         }
     }
 }

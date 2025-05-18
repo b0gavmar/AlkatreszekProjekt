@@ -139,7 +139,6 @@ public partial class AlkatreszekContext : DbContext
                 .HasColumnType("INT")
                 .HasColumnName("megrendeles_id");
 
-            entity.HasKey(e=>e.Id);
         });
 
         OnModelCreatingPartial(modelBuilder);
