@@ -12,48 +12,57 @@ namespace AlkatreszekProjekt.Controllers
         private readonly AlkatreszekContext _context = new();
 
         [HttpGet("alkatreszek/count")]
-        public async Task<int> GetNumberOfAlkatreszek()
+        public async Task<IActionResult> GetNumberOfAlkatreszek()
         {
-            return await _context.Alkatreszeks.CountAsync();
+            return Ok(await _context.Alkatreszeks.CountAsync());
         }
 
         [HttpGet("beszallitok/count")]
-        public async Task<int> GetNumberOfBeszallitok()
+        public async Task<IActionResult> GetNumberOfBeszallitok()
         {
-            return await _context.Beszallitoks.CountAsync();
+            return Ok(await _context.Beszallitoks.CountAsync());
         }
 
         [HttpGet("megrendelok/count")]
-        public async Task<int> GetNumberOfMegrendelok()
+        public async Task<IActionResult> GetNumberOfMegrendelok()
         {
-            return await _context.Megrendeloks.DistinctBy(m => m.Id).CountAsync();
+            return Ok(await _context.Megrendeloks.DistinctBy(m => m.Id).CountAsync());
         }
 
         [HttpGet("megrendelesek/teljesitett/count")]
-        public async Task<int> GetTeljesitettNumber()
+        public async Task<IActionResult> GetTeljesitettNumber()
         {
-            return await _context.Megrendeleseks.Where(m=> m.Teljesitve == "True").CountAsync();
+            return Ok(await _context.Megrendeleseks.Where(m => m.Teljesitve == "True").CountAsync());
         }
 
 
 
 
         [HttpGet("alkatreszek/laptop/count")]
-        public async Task<int> GetNumberOfLaptopAlkatresz()
+        public async Task<IActionResult> GetNumberOfLaptopAlkatresz()
         {
-            return await _context.Alkatreszeks.Where(a => a.LaptopAlkatresz == "True").CountAsync();
+            return Ok(await _context.Alkatreszeks.Where(a => a.LaptopAlkatresz == "True").CountAsync());
         }
 
         [HttpGet("megrendelok/budapest/count")]
-        public async Task<int> GetNumberOfMegrendeloFromBudapest()
+        public async Task<IActionResult> GetNumberOfMegrendeloFromBudapest()
         {
-            return await _context.Megrendeloks.Where(m => m.Lakhely == "Budapest").CountAsync();
+            return Ok(await _context.Megrendeloks.Where(m => m.Lakhely == "Budapest").CountAsync());
         }
 
         [HttpGet("beszallitok/debrecen/count")]
-        public async Task<int> GetNumberOfBeszallitoFromDebrecen()
+        public async Task<IActionResult> GetNumberOfBeszallitoFromDebrecen()
         {
-            return await _context.Beszallitoks.Where(b => b.BeszallitoTelephely == "Debrecen").DistinctBy(b=>b.Id).CountAsync();
+            return Ok(await _context.Beszallitoks.Where(b => b.BeszallitoTelephely == "Debrecen").DistinctBy(b => b.Id).CountAsync());
+        }
+
+
+
+
+        [HttpGet("beszallitok/nevsorrend")]
+        public async Task<IActionResult> GetBeszallitokOrderedByName()
+        {
+            return Ok(await _context.Beszallitoks.OrderBy(b=>b.BeszallitoNev));
         }
     }
 }
