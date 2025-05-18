@@ -1,0 +1,6 @@
+@AlkatreszekProjekt_HostAddress = http://localhost:5296
+
+GET {{AlkatreszekProjekt_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
