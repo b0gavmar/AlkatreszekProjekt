@@ -56,6 +56,8 @@ public partial class AlkatreszekContext : DbContext
             entity.Property(e => e.Raktaron)
                 .HasColumnType("INT")
                 .HasColumnName("raktaron");
+
+            entity.HasKey(e => e.Id);
         });
 
         modelBuilder.Entity<Beszallitok>(entity =>
@@ -69,6 +71,8 @@ public partial class AlkatreszekContext : DbContext
             entity.Property(e => e.Id)
                 .HasColumnType("INT")
                 .HasColumnName("id");
+
+            entity.HasKey(entity => entity.Id);
         });
 
         modelBuilder.Entity<Kategoraik>(entity =>
@@ -81,6 +85,8 @@ public partial class AlkatreszekContext : DbContext
                 .HasColumnType("INT")
                 .HasColumnName("id");
             entity.Property(e => e.KategoriaNev).HasColumnName("kategoria_nev");
+
+            entity.HasKey(entity=> entity.Id);
         });
 
         modelBuilder.Entity<Megrendelesek>(entity =>
@@ -97,6 +103,8 @@ public partial class AlkatreszekContext : DbContext
                 .HasColumnType("INT")
                 .HasColumnName("megrendelo_id");
             entity.Property(e => e.Teljesitve).HasColumnName("teljesitve");
+
+            entity.HasKey(entity=> entity.Id);
         });
 
         modelBuilder.Entity<Megrendelok>(entity =>
@@ -111,6 +119,8 @@ public partial class AlkatreszekContext : DbContext
                 .HasColumnName("id");
             entity.Property(e => e.Lakhely).HasColumnName("lakhely");
             entity.Property(e => e.MegrendeloNev).HasColumnName("megrendelo_nev");
+
+            entity.HasKey(entity => entity.Id);
         });
 
         modelBuilder.Entity<RendelesTetelek>(entity =>
@@ -128,6 +138,8 @@ public partial class AlkatreszekContext : DbContext
             entity.Property(e => e.MegrendelesId)
                 .HasColumnType("INT")
                 .HasColumnName("megrendeles_id");
+
+            entity.HasKey(e=>e.Id);
         });
 
         OnModelCreatingPartial(modelBuilder);
